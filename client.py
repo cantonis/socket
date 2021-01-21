@@ -3,7 +3,7 @@
 import socket
 
 SERVER_ADDRESS = '127.0.0.1'  # The server's hostname or IP address
-SERVER_PORT = 65433        # The port used by the server
+SERVER_PORT = 65432        # The port used by the server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((SERVER_ADDRESS, SERVER_PORT))
 dati = input("Inserisci messaggio per il server: ")
