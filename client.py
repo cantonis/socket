@@ -24,7 +24,7 @@ print("Connesso a " + str((SERVER_ADDRESS, SERVER_PORT)))
 while True:
     try:
         dati = input(
-            "Inserisci i dati dell'operaizone (ko per terminare la connessione): ")
+            "Inserisci i dati dell'operazione (ko per terminare la connessione): ")
     except EOFError:
         print("\nOkay. Exit")
         break
