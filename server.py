@@ -62,8 +62,10 @@ def riceviConnessioni(socket):
         print("\nConnessione ricevuta da " + str(addr_client))
         print("\nCreo un socket per gestire gli input")
         try:
-            threading.Thread(target=riceviComandi, args=(
-                sock_service, addr_client)).start()
+            t = threading.Thread(target=riceviComandi, args=(
+                sock_service, addr_client))
+            t.start()
+            t.join()
         except:
             print("Il thread non si avvia.")
             socket.close()
