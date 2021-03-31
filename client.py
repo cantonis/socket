@@ -2,41 +2,23 @@
 
 
 import socket
-input_string = 'Hello'
-print(type(input_string))
-input_bytes_encoded = input_string.encode()
-print(type(input_bytes_encoded))
-print(input_bytes_encoded)
-output_string = input_bytes_encoded.decode()
-print(type(output_string))
-print(output_string)
-
 
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 22224
+PROTOCOL = ["SYN", "SYN ACK", "ACK with DATA", "ACK for DATA"]
 
 sock_service = socket.socket()
-
 sock_service.connect((SERVER_ADDRESS, SERVER_PORT))
-
 print("Connesso a " + str((SERVER_ADDRESS, SERVER_PORT)))
+
+step = 0
+dati = str(step)
+
 while True:
-    try:
-        dati = input(
-            "Inserisci i dati da inviare (0 per terminare la connessione): ")
-    except EOFError:
-        print("\nOkay. Exit")
-        break
-    if not dati:
-        print("Non puoi inviare una stringa vuota!")
-        continue
-    if dati == '0':
-        print("Chiudo la connessione con il server!")
-        break
-
     dati = dati.encode()
-
     sock_service.send(dati)
+
+    print("Invio:    " + str(step) + " - " + PROTOCOL[step])
 
     dati = sock_service.recv(2048)
 
@@ -46,7 +28,14 @@ while True:
 
     dati = dati.decode()
 
-    print("Ricevuto dal server:")
-    print(dati + '\n')
+    if dati == '3':
+        print("Ricevuto: " + dati + " - " + PROTOCOL[int(dati)])
+        print("Termino connessione")
+        break
+    else:
+        step = int(dati)
+        print("Ricevuto: " + str(step) + " - " + PROTOCOL[step])
+        step += 1
+        dati = str(step)
 
 sock_service.close()
